@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
+import { auth } from './Firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            window.location.href = "/profile";
+            toast.success("Logged in successfully", { position: "top-right" });
+        } catch (error) {
+        }
+    }
 
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <h3>Login</h3>
             <div className="">
                 <label htmlFor="email">Email</label>
